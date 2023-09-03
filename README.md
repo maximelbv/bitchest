@@ -6,29 +6,34 @@
 # Requirements
 
 - PHP 8.1.0
+- PHPmyAdmin 5.1.1
 
 # Installation
 
 - ## API
 
-```shell
-cd api
-composer install
-php artisan migrate:refresh --seed
-php artisan serve
-```
+  ### Step 1 : Create a database named 'bitchest'
+
+  ### Step 2 :
+
+  ```shell
+  cd api
+  composer install
+  php artisan migrate:refresh --seed
+  php artisan serve
+  ```
 
 ▶️ API will launch on the port `8000`
 
 - ## Client interface
 
-```shell
-cd app
-npm i
-npm run dev
-```
+  ```shell
+  cd app
+  npm i
+  npm run dev
+  ```
 
-▶️ Client app will launch on the port `5173`
+  ▶️ Client app will launch on the port `5173`
 
 # Documentation
 
