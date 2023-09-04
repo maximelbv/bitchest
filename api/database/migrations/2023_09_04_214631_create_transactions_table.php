@@ -12,22 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('transactions', function (Blueprint $table) {
-            $table->id('transaction_id');
-            $table->foreign('user_id')
-                ->references('user_id')
-                ->on('users')
-                ->constrained()
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-            $table->foreign('currency_id')
-                ->references('currency_id')
-                ->on('currencies')
-                ->constrained()
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-            $table->unsignedBigInteger('euro_amount');
+            $table->id();
+            $table->foreignId("user_id")
+            ->constrained()
+            ->cascadeOnUpdate()
+            ->cascadeOnDelete();
+            $table->foreignId("currency_id")
+            ->constrained()
+            ->cascadeOnUpdate()
+            ->cascadeOnDelete();
+            $table->unsignedBigInteger('euro_amount')->nullable(false);
             $table->enum('transaction_type', ['buy', 'sell']);
-            $table->timestamps('transaction_date');
+            $table->timestamps();
         });
     }
 
