@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
-export default function Root() {
+export default function Home() {
   const StyledRoot = styled.div``;
 
-  return <StyledRoot></StyledRoot>;
+  return <StyledRoot>HOME</StyledRoot>;
 }
