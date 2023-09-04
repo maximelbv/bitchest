@@ -41,4 +41,4 @@
 
 ### 🔗 [Database schema](https://drawsql.app/teams/a-523/diagrams/bit-chest/embed)
 
-![database schema](/documents/images/database_schema.png)
+![database schema](/documents/database_schema.png)
