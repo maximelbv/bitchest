@@ -12,8 +12,8 @@ import { useState } from "react";
 import { mainListItems, secondaryListItems } from "../components/MenuItems";
 import MuiDrawer from "@mui/material/Drawer";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import MenuIcon from "@mui/icons-material/Menu";
 import { useAuth } from "../contexts/AuthContext";
+import Bitchest from "../../public/static/images/bitchest_icon.svg";
 
 const drawerWidth = 240;
 
@@ -70,7 +70,11 @@ export default function CustomAppBar() {
 
   return (
     <>
-      <Bar position="absolute" open={open}>
+      <Bar
+        position="absolute"
+        open={open}
+        sx={{ "& .MuiToolbar-root": { paddingLeft: "14px !important" } }}
+      >
         <Toolbar
           sx={{
             pr: "24px",
@@ -86,7 +90,7 @@ export default function CustomAppBar() {
               ...(open && { display: "none" }),
             }}
           >
-            <MenuIcon />
+            <img src={Bitchest} width={50} height={40} />
           </IconButton>
           <Typography
             component="h1"
@@ -112,6 +116,7 @@ export default function CustomAppBar() {
           }}
         >
           <IconButton onClick={toggleDrawer}>
+            <img src="/static/images/bitchest_logo.png" width={200} />
             <ChevronLeftIcon />
           </IconButton>
         </Toolbar>
