@@ -1,37 +1,16 @@
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { LinearProgress } from "@mui/material";
-
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="/">
-        BitChest
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
-const defaultTheme = createTheme();
+import Copyright from "../components/Copyright";
 
 export default function LoginPage() {
   const email = useRef();
@@ -52,11 +31,11 @@ export default function LoginPage() {
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false), navigate("/");
-    }, 3000);
+    }, 2000);
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <>
       {isLoading && <LinearProgress />}
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
@@ -151,6 +130,6 @@ export default function LoginPage() {
           </Box>
         </Grid>
       </Grid>
-    </ThemeProvider>
+    </>
   );
 }

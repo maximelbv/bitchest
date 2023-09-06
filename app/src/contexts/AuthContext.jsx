@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 
 const AuthContext = createContext();
@@ -9,6 +9,14 @@ export function useAuth() {
 }
 
 export function AuthProvider(props) {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    if (Cookies.get("user")) {
+      setUser(JSON.parse(Cookies.get("user")));
+    }
+  }, []);
+
   const fetchUser = async () => {
     if (!Cookies.get("user")) {
       try {
@@ -22,7 +30,10 @@ export function AuthProvider(props) {
 
         if (response.status === 200) {
           const userData = await response.json();
-          Cookies.set("user", userData, { secure: true, sameSite: "strict" });
+          Cookies.set("user", JSON.stringify(userData), {
+            secure: true,
+            sameSite: "strict",
+          });
         }
       } catch (err) {
         console.error(err);
@@ -50,6 +61,7 @@ export function AuthProvider(props) {
   };
 
   const value = {
+    user,
     login,
     fetchUser,
     useAuth,
