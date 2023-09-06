@@ -7,6 +7,11 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useEffect, useRef, useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import { LinearProgress } from "@mui/material";
 
 function Copyright(props) {
   return (
@@ -29,17 +34,30 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function LoginPage() {
-  const handleSubmit = (event) => {
+  const email = useRef();
+  const password = useRef();
+  const { login } = useAuth();
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (Cookies.get("user")) {
+      navigate("/");
+    }
+  }, []);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    login(email.current.value, password.current.value);
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false), navigate("/");
+    }, 3000);
   };
 
   return (
     <ThemeProvider theme={defaultTheme}>
+      {isLoading && <LinearProgress />}
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
         <Grid
@@ -74,7 +92,7 @@ export default function LoginPage() {
           square
         >
           <img
-            src="../../public/static/images/bitchest_logo.png"
+            src="/static/images/bitchest_logo.png"
             width={"80%"}
             style={{ marginTop: "2rem" }}
           />
@@ -105,6 +123,8 @@ export default function LoginPage() {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                ref={email}
+                onChange={(e) => (email.current.value = e.target.value)}
               />
               <TextField
                 margin="normal"
@@ -115,6 +135,8 @@ export default function LoginPage() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                ref={password}
+                onChange={(e) => (password.current.value = e.target.value)}
               />
               <Button
                 type="submit"
