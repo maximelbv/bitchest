@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
@@ -11,11 +11,14 @@ export function useAuth() {
 
 export function AuthProvider(props) {
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
+  let user = useRef();
 
   useEffect(() => {
+    if (!Cookies.get("user")) {
+      fetchUser();
+    }
     if (Cookies.get("user")) {
-      setUser(JSON.parse(Cookies.get("user")));
+      user.current = JSON.parse(Cookies.get("user"));
     }
   }, []);
 
@@ -36,6 +39,8 @@ export function AuthProvider(props) {
             secure: true,
             sameSite: "strict",
           });
+          user.current = JSON.parse(Cookies.get("user"));
+          console.log(user.current);
         } else if (response.status === 401) {
           navigate("/login");
         }

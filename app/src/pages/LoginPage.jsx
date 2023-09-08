@@ -8,19 +8,18 @@ import Typography from "@mui/material/Typography";
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 import { LinearProgress } from "@mui/material";
 import Copyright from "../components/Copyright";
 
 export default function LoginPage() {
   const email = useRef();
   const password = useRef();
-  const { login } = useAuth();
+  const { login, user } = useAuth();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (Cookies.get("user")) {
+    if (user.current) {
       navigate("/");
     }
   }, []);

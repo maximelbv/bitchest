@@ -1,17 +1,18 @@
 import { ThemeProvider } from "@emotion/react";
 import { Box, CssBaseline, createTheme } from "@mui/material";
-import Cookies from "js-cookie";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CustomAppBar from "../components/CustomAppBar";
+import { useAuth } from "../contexts/AuthContext";
 
 const defaultTheme = createTheme();
 
 export default function RootLayout({ children }) {
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   useEffect(() => {
-    if (!Cookies.get("user")) {
+    if (!user.current) {
       navigate("/login");
     }
   }, []);

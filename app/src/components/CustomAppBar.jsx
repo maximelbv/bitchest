@@ -1,19 +1,22 @@
 import styled from "@emotion/styled";
 import {
   AppBar,
-  Badge,
   Divider,
   IconButton,
   List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
   Toolbar,
   Typography,
 } from "@mui/material";
 import { useState } from "react";
-import { mainListItems, secondaryListItems } from "../components/MenuItems";
 import MuiDrawer from "@mui/material/Drawer";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { useAuth } from "../contexts/AuthContext";
 import Bitchest from "../../public/static/images/bitchest_icon.svg";
+import { menus } from "../constants/menus";
+import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -58,6 +61,14 @@ const Drawer = styled(MuiDrawer, {
         width: theme.spacing(9),
       },
     }),
+    "& a": {
+      textDecoration: "none",
+      color: "#222222",
+    },
+    "& .MuiButtonBase-root": {
+      paddingLeft: "22px",
+      minWidth: "40px !important",
+    },
   },
 }));
 
@@ -99,11 +110,8 @@ export default function CustomAppBar() {
             noWrap
             sx={{ flexGrow: 1 }}
           >
-            {user && user.email}
+            {user.current && user.current.email}
           </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary"></Badge>
-          </IconButton>
         </Toolbar>
       </Bar>
       <Drawer variant="permanent" open={open}>
@@ -122,9 +130,19 @@ export default function CustomAppBar() {
         </Toolbar>
         <Divider />
         <List component="nav">
-          {mainListItems}
-          <Divider sx={{ my: 1 }} />
-          {secondaryListItems}
+          {menus.map((m) => {
+            return (
+              user.current &&
+              m.userRoleAccess.includes(user.current.role) && (
+                <Link key={m.name} href={m.link}>
+                  <ListItemButton>
+                    <ListItemIcon>{m.icon}</ListItemIcon>
+                    <ListItemText primary={m.label} />
+                  </ListItemButton>
+                </Link>
+              )
+            );
+          })}
         </List>
       </Drawer>
     </>
