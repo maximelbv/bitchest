@@ -67,12 +67,11 @@ export function AuthProvider(props) {
       });
   };
 
-  const logout = async () => {
-    console.log("test");
+  const logout = async (email, password) => {
     await axios
       .post(
         `${import.meta.env.VITE_API_URL}/logout`,
-
+        { email, password },
         {
           withCredentials: true,
         }
@@ -80,6 +79,7 @@ export function AuthProvider(props) {
       .then((res) => {
         if (res.status === 200) {
           Cookies.remove("user");
+          window.location.reload();
         }
       })
       .catch((err) => {
