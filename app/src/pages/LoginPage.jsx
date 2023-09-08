@@ -5,32 +5,33 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { LinearProgress } from "@mui/material";
 import Copyright from "../components/Copyright";
 
-export default function LoginPage() {
+export default function LoginPage({ user }) {
   const email = useRef();
   const password = useRef();
-  const { login, user } = useAuth();
-  const navigate = useNavigate();
+  const { login } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    if (user.current) {
-      navigate("/");
-    }
-  }, []);
+  if (user) {
+    return <Navigate to="/home" replace />;
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    login(email.current.value, password.current.value);
     setIsLoading(true);
+    login(email.current.value, password.current.value);
+
+    setIsLoading(true);
+
     setTimeout(() => {
-      setIsLoading(false), navigate("/");
-    }, 2000);
+      setIsLoading(false);
+      window.location.reload();
+    }, 3000);
   };
 
   return (

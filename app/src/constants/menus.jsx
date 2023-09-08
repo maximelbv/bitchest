@@ -7,7 +7,7 @@ export const menus = [
     name: "home",
     label: "Home",
     icon: <HomeIcon />,
-    link: "/",
+    link: "/home",
     userRoleAccess: ["member", "admin"],
   },
   {
@@ -21,7 +21,7 @@ export const menus = [
     name: "usersManagement",
     label: "Users Management",
     icon: <ManageAccountsIcon />,
-    link: "/admin/users-management",
+    link: "/users-management",
     userRoleAccess: ["admin"],
   },
 ];

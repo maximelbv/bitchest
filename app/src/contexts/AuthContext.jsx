@@ -1,6 +1,5 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 const AuthContext = createContext();
@@ -10,8 +9,9 @@ export function useAuth() {
 }
 
 export function AuthProvider(props) {
-  const navigate = useNavigate();
-  let user = useRef();
+  let user = useRef(
+    Cookies.get("user") ? JSON.parse(Cookies.get("user")) : null
+  );
 
   useEffect(() => {
     if (!Cookies.get("user")) {
@@ -24,29 +24,27 @@ export function AuthProvider(props) {
 
   const fetchUser = async () => {
     if (!Cookies.get("user")) {
-      try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/user`, {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        });
+      await axios
+        .get(
+          `${import.meta.env.VITE_API_URL}/user`,
 
-        if (response.status === 200) {
-          const userData = await response.json();
-          Cookies.set("user", JSON.stringify(userData), {
-            secure: true,
-            sameSite: "strict",
-          });
-          user.current = JSON.parse(Cookies.get("user"));
-          console.log(user.current);
-        } else if (response.status === 401) {
-          navigate("/login");
-        }
-      } catch (err) {
-        console.error(err);
-      }
+          {
+            withCredentials: true,
+          }
+        )
+        .then(async (res) => {
+          if (res.status === 200) {
+            const userData = await res.data;
+            Cookies.set("user", JSON.stringify(userData), {
+              secure: true,
+              sameSite: "strict",
+            });
+            user.current = JSON.parse(Cookies.get("user"));
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     }
   };
 
@@ -69,9 +67,30 @@ export function AuthProvider(props) {
       });
   };
 
+  const logout = async () => {
+    console.log("test");
+    await axios
+      .post(
+        `${import.meta.env.VITE_API_URL}/logout`,
+
+        {
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          Cookies.remove("user");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
   const value = {
     user,
     login,
+    logout,
     fetchUser,
     useAuth,
   };

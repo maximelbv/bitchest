@@ -17,6 +17,7 @@ import { useAuth } from "../contexts/AuthContext";
 import Bitchest from "../../public/static/images/bitchest_icon.svg";
 import { menus } from "../constants/menus";
 import { Link } from "react-router-dom";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const drawerWidth = 240;
 
@@ -73,7 +74,7 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function CustomAppBar() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const [open, setOpen] = useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -112,6 +113,14 @@ export default function CustomAppBar() {
           >
             {user.current && user.current.email}
           </Typography>
+          <IconButton
+            aria-label="delete"
+            onClick={() => {
+              logout();
+            }}
+          >
+            <LogoutIcon />
+          </IconButton>
         </Toolbar>
       </Bar>
       <Drawer variant="permanent" open={open}>
@@ -123,7 +132,7 @@ export default function CustomAppBar() {
             px: [1],
           }}
         >
-          <IconButton onClick={toggleDrawer}>
+          <IconButton onClick={toggleDrawer} sx={{ borderRadius: "50px" }}>
             <img src="/static/images/bitchest_logo.png" width={200} />
             <ChevronLeftIcon />
           </IconButton>
@@ -134,7 +143,7 @@ export default function CustomAppBar() {
             return (
               user.current &&
               m.userRoleAccess.includes(user.current.role) && (
-                <Link key={m.name} href={m.link}>
+                <Link key={m.name} to={{ pathname: m.link }}>
                   <ListItemButton>
                     <ListItemIcon>{m.icon}</ListItemIcon>
                     <ListItemText primary={m.label} />
