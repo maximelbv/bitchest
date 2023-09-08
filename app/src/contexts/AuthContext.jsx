@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 const AuthContext = createContext();
@@ -9,6 +10,7 @@ export function useAuth() {
 }
 
 export function AuthProvider(props) {
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -34,6 +36,8 @@ export function AuthProvider(props) {
             secure: true,
             sameSite: "strict",
           });
+        } else if (response.status === 401) {
+          navigate("/login");
         }
       } catch (err) {
         console.error(err);
