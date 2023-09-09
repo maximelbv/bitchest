@@ -12,13 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 class AuthController extends Controller
 {
 
-    public function register(Request $request) {
-        return User::create([
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password'))
-        ]);
-    }
-
     public function login(Request $request) {
         if (!Auth::attempt($request->only('email', 'password'))) {
             return response([
@@ -42,8 +35,8 @@ class AuthController extends Controller
         ])->withCookie($cookie);
     }
 
-
     public function user() {
-        return Auth::user();
+        $user = Auth::user();
+        return response($user , 200);
     }
 }

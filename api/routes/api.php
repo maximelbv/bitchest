@@ -1,10 +1,20 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::post('register', [AuthController::class, 'register']);
+Route::prefix('/user')->name('user')->controller(\App\Http\Controllers\UserController::class)->group(function () {
+
+    Route::get('/all', 'index');
+    Route::get('/{id}', 'show');
+    Route::post('/', 'store');
+    Route::put('/{id}', 'update');
+    Route::delete('/{id}', 'destroy');
+
+});
+
 Route::post('login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function() {
