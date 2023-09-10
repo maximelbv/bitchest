@@ -17,7 +17,7 @@ return new class extends Migration
             ->constrained()
             ->cascadeOnUpdate()
             ->cascadeOnDelete();
-            $table->timestamps();
+            $table->date('date');
             $table->unsignedBigInteger('value');
         });
     }

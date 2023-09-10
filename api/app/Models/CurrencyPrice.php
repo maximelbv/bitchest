@@ -5,13 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Wallet extends Model
+class CurrencyPrice extends Model
 {
     use HasFactory;
 
-   protected $fillable = [
-        'user_id',
+    public $timestamps = false;
+
+    protected $fillable = [
         'currency_id',
         'value',
-   ];
+        'date'
+    ];
 }

@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Currency;
+use App\Models\CurrencyPrice;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
@@ -53,6 +54,22 @@ class DatabaseSeeder extends Seeder
                 'name' => $c,
                 'logo_url' => '/static/images/'.$c
             ]);
+        }
+
+        // currency_prices 
+        $allCurrencies = Currency::all();
+        $endDate = now();
+        foreach($allCurrencies as $c) {
+            $startDate = $endDate->copy()->subDays(30);
+            while ($startDate <= $endDate) {
+                CurrencyPrice::create([
+                    'currency_id' => $c->id,
+                    'date' => $startDate,
+                    'value' => $faker->randomFloat(2, 0.01, 1000.00),
+                ]);
+                $startDate = $startDate->addDay();
+            }
+
         }
     }
 }
