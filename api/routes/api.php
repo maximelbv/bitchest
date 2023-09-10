@@ -25,6 +25,16 @@ Route::prefix('/currency')->name('currency')->controller(\App\Http\Controllers\C
 
 });
 
+Route::prefix('/wallet')->name('wallet')->controller(\App\Http\Controllers\WalletController::class)->group(function () {
+
+    Route::get('/user/{userId}/all', 'index');
+    Route::get('/user/{userId}/currency/{currencyId}', 'show');
+    Route::post('/', 'store');
+    Route::put('/{id}', 'update');
+    Route::delete('/{id}', 'destroy');
+
+});
+
 Route::post('login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function() {

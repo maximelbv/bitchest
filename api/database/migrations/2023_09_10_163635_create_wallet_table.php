@@ -21,7 +21,7 @@ return new class extends Migration
             ->constrained()
             ->cascadeOnUpdate()
             ->cascadeOnDelete();
-            $table->float("count", 8, 2);
+            $table->float("value", 8, 2);
             $table->timestamps();
         });
     }
