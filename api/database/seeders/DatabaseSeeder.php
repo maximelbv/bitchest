@@ -3,7 +3,11 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Faker\Factory as Faker;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,11 +16,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        $faker = Faker::create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        //admin
+        User::create([
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make('pass'),
+            'role' => 'admin'
+        ]);
+
+        // members
+        foreach(range(1, 10) as $index) {
+            User::create([
+                'email' => $faker->email(),
+                'password' => Hash::make('pass'),
+                'role' => 'member'
+            ]);
+        }
     }
 }

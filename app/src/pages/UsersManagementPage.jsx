@@ -29,7 +29,7 @@ export default function UsersManagementPage() {
     },
     {
       field: "balance",
-      headerName: "Balance",
+      headerName: "Balance (€)",
       type: "number",
       width: 110,
     },
