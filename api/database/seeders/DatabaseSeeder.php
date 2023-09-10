@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Currency;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
@@ -17,6 +18,18 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $faker = Faker::create();
+        $currencies = [
+            'bitcoin', 
+            'etherum', 
+            'ripple', 
+            'bitcoin_cash', 
+            'cardano', 
+            'litecoin', 
+            'nem', 
+            'stellar', 
+            'iota', 
+            'dash'
+        ];
 
         //admin
         User::create([
@@ -31,6 +44,14 @@ class DatabaseSeeder extends Seeder
                 'email' => $faker->email(),
                 'password' => Hash::make('pass'),
                 'role' => 'member'
+            ]);
+        }
+
+        // currencies
+        foreach($currencies as $c) {
+            Currency::create([
+                'name' => $c,
+                'logo_url' => '/static/images/'.$c
             ]);
         }
     }
