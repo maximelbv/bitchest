@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useAuth } from "./useAuth";
 
 const UserContext = createContext();
 
@@ -14,6 +15,7 @@ export function UserProvider(props) {
   const [users, setUsers] = useState();
   const [isLoading, setIsLoading] = useState();
   const [apiError, setApiError] = useState(null);
+  const { fetchUser } = useAuth();
 
   useEffect(() => {
     getAllUsers();
@@ -65,7 +67,7 @@ export function UserProvider(props) {
       .then((res) => {
         if (res.status === 200) {
           if (userId === JSON.parse(Cookies.get("user")).id) {
-            Cookies.set("user", JSON.stringify(body));
+            fetchUser();
           }
 
           toast.success(res.data.message, {
