@@ -9,48 +9,66 @@ import { ProtectedRoute } from "./components/ProtectedRoute";
 import Cookies from "js-cookie";
 import NotFoundPage from "./pages/NotFoundPage";
 import MyInformationsPage from "./pages/MyInformationsPage";
+import { UserProvider } from "./hooks/useUser";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const user = Cookies.get("user")
     ? JSON.parse(Cookies.get("user"))
     : undefined;
 
-  console.log(user);
-
   return (
     <BrowserRouter>
       <main>
         <AuthProvider>
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <ProtectedRoute
-                  isAllowed={
-                    !!user && (user.role === "admin" || user.role === "member")
-                  }
-                >
-                  <RootLayout />
-                </ProtectedRoute>
-              }
-            >
-              <Route path="/home" element={<HomePage />} />
-              <Route path="/my-informations" element={<MyInformationsPage />} />
+          <UserProvider>
+            <ToastContainer
+              autoClose={5000}
+              hideProgressBar={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+            />
+
+            <Routes>
               <Route
-                path="users-management"
+                path="/"
                 element={
                   <ProtectedRoute
-                    redirectPath="/home"
-                    isAllowed={!!user && user.role === "admin"}
+                    isAllowed={
+                      !!user &&
+                      (user.role === "admin" || user.role === "member")
+                    }
                   >
-                    <UsersManagementPage />
+                    <RootLayout />
                   </ProtectedRoute>
                 }
-              />
-            </Route>
-            <Route path="*" element={<NotFoundPage />} />
-            <Route path="/login" element={<LoginPage user={user} />} />
-          </Routes>
+              >
+                <Route path="/home" element={<HomePage />} />
+                <Route
+                  path="/my-informations"
+                  element={<MyInformationsPage />}
+                />
+                <Route
+                  path="users-management"
+                  element={
+                    <ProtectedRoute
+                      redirectPath="/home"
+                      isAllowed={!!user && user.role === "admin"}
+                    >
+                      <UsersManagementPage />
+                    </ProtectedRoute>
+                  }
+                />
+              </Route>
+              <Route path="*" element={<NotFoundPage />} />
+              <Route path="/login" element={<LoginPage user={user} />} />
+            </Routes>
+            <ToastContainer />
+          </UserProvider>
         </AuthProvider>
       </main>
     </BrowserRouter>

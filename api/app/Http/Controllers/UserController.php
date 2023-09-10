@@ -10,11 +10,12 @@ class UserController extends Controller
 {
 
     public function store(Request $request) {
-        return User::create([
+        $user = User::create([
             'email' => $request['email'],
             'role' => $request['role'],
             'password' => Hash::make($request['password'])
         ]);
+        return response(['message' => $user->email . " successfully created !"], 200);
     }
 
     public function show (string $id) {
