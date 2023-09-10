@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext, useContext, useEffect, useRef } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import Cookies from "js-cookie";
 
 const AuthContext = createContext();
@@ -9,6 +9,8 @@ export function useAuth() {
 }
 
 export function AuthProvider(props) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [apiError, setApiError] = useState(null);
   let user = useRef(
     Cookies.get("user") ? JSON.parse(Cookies.get("user")) : null
   );
@@ -60,10 +62,15 @@ export function AuthProvider(props) {
       .then((res) => {
         if (res.status === 200) {
           fetchUser();
+          setIsLoading(true);
+          setTimeout(() => {
+            setIsLoading(false);
+            window.location.reload();
+          }, 3000);
         }
       })
       .catch((err) => {
-        console.error(err);
+        setApiError(err.response.data.message);
       });
   };
 
@@ -91,6 +98,8 @@ export function AuthProvider(props) {
     user,
     login,
     logout,
+    apiError,
+    isLoading,
     fetchUser,
     useAuth,
   };

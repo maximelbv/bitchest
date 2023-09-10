@@ -5,17 +5,17 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { useRef, useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
+import { useRef } from "react";
+import { useAuth } from "../hooks/useAuth";
 import { Navigate } from "react-router-dom";
-import { LinearProgress } from "@mui/material";
+import { Alert, LinearProgress } from "@mui/material";
 import Copyright from "../components/Copyright";
 
 export default function LoginPage({ user }) {
   const email = useRef();
   const password = useRef();
-  const { login } = useAuth();
-  const [isLoading, setIsLoading] = useState(false);
+  const { login, apiError, isLoading } = useAuth();
+  // const [isLoading, setIsLoading] = useState(false);
 
   if (user) {
     return <Navigate to="/home" replace />;
@@ -23,15 +23,7 @@ export default function LoginPage({ user }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setIsLoading(true);
-    login(email.current.value, password.current.value);
-
-    setIsLoading(true);
-
-    setTimeout(() => {
-      setIsLoading(false);
-      window.location.reload();
-    }, 3000);
+    await login(email.current.value, password.current.value);
   };
 
   return (
@@ -125,6 +117,7 @@ export default function LoginPage({ user }) {
               >
                 Sign In
               </Button>
+              {apiError && <Alert severity="error">{apiError}</Alert>}
               <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>

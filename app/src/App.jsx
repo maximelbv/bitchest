@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import RootLayout from "./layouts/RootLayout";
-import { AuthProvider } from "./contexts/AuthContext";
+import { AuthProvider } from "./hooks/useAuth";
 import UsersManagementPage from "./pages/UsersManagementPage";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import Cookies from "js-cookie";

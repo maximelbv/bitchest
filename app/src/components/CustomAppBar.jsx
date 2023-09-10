@@ -13,7 +13,7 @@ import {
 import { useState } from "react";
 import MuiDrawer from "@mui/material/Drawer";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../hooks/useAuth";
 import Bitchest from "../../public/static/images/bitchest_icon.svg";
 import { menus } from "../constants/menus";
 import { Link } from "react-router-dom";
