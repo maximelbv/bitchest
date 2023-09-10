@@ -15,6 +15,16 @@ Route::prefix('/user')->name('user')->controller(\App\Http\Controllers\UserContr
 
 });
 
+Route::prefix('/currency')->name('currency')->controller(\App\Http\Controllers\CurrencyController::class)->group(function () {
+
+    Route::get('/all', 'index');
+    Route::get('/{id}', 'show');
+    Route::post('/', 'store');
+    Route::put('/{id}', 'update');
+    Route::delete('/{id}', 'destroy');
+
+});
+
 Route::post('login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function() {

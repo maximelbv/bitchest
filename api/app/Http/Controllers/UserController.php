@@ -9,6 +9,16 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
 
+    public function index () {
+      $users = User::all();
+      return response($users, 200);
+    }
+
+    public function show (string $id) {
+      $user = User::findOrFail($id);
+      return response($user, 200);
+    }
+
     public function store(Request $request) {
         $user = User::create([
             'email' => $request['email'],
@@ -18,18 +28,7 @@ class UserController extends Controller
         return response(['message' => $user->email . " successfully created !"], 200);
     }
 
-    public function show (string $id) {
-      $user = User::findOrFail($id);
-      return response($user, 200);
-    }
-
-    public function index () {
-      $users = User::all();
-      return response($users, 200);
-    }
-
-    public function update(string $id, Request $request)
-    {
+    public function update(string $id, Request $request) {
       $user = User::findOrFail($id);
       $user->update($request->all());
       return response([
