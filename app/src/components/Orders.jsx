@@ -34,7 +34,7 @@ export default function Orders() {
                 currencies && currencies.filter((c) => c.id === t.currency_id);
               return (
                 <TableRow key={t.id}>
-                  <TableCell>{t.created_at}</TableCell>
+                  <TableCell>{t.updated_at}</TableCell>
                   <TableCell>{t.transaction_type}</TableCell>
                   <TableCell>
                     {linkedCurrency && linkedCurrency[0].name}

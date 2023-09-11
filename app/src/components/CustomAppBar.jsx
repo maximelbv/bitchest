@@ -11,7 +11,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MuiDrawer from "@mui/material/Drawer";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { useAuth } from "../hooks/useAuth";
@@ -84,7 +84,6 @@ export default function CustomAppBar() {
   const toggleDrawer = () => {
     setOpen(!open);
   };
-
   return (
     <>
       <Bar
@@ -97,6 +96,8 @@ export default function CustomAppBar() {
         <Toolbar
           sx={{
             pr: "24px",
+            // width: "100%",
+            justifyContent: "space-between",
           }}
         >
           <IconButton
@@ -111,21 +112,13 @@ export default function CustomAppBar() {
           >
             <img src={Bitchest} width={50} height={40} />
           </IconButton>
-          <Typography
-            component="h1"
-            variant="h6"
-            color="inherit"
-            noWrap
-            sx={{ flexGrow: 1 }}
-          >
-            {user.current && user.current.email}
-          </Typography>
+
           <Chip
             sx={{ color: "white", fontSize: "20px" }}
-            icon={<AccountBalanceWallet sx={{ color: "white !important" }} />}
-            label={user.current && `${user.current.balance} €`}
+            label={user && `${user.current.balance} €`}
           />
           <IconButton
+            sx={{ justifySelf: "flex-end" }}
             aria-label="delete"
             onClick={() => {
               logout();

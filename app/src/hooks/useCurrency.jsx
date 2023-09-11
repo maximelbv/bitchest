@@ -90,7 +90,7 @@ export function CurrencyProvider(props) {
       })
       .then((res) => {
         if (res.status === 200) {
-          setTransactions(res.data);
+          setTransactions(res.data.reverse());
         }
       })
       .catch((err) => {
@@ -108,8 +108,11 @@ export function CurrencyProvider(props) {
           toast.success(res.data.message, {
             position: toast.POSITION.BOTTOM_CENTER,
           });
+
           fetchUser();
+          getAllCurrencies();
           user.current && getAllTransactions(user.current.id);
+          user.current && getAllWallets(user.current.id);
         }
       })
       .catch((err) => {

@@ -15,20 +15,16 @@ export default function Deposits() {
 
   return (
     <React.Fragment>
-      <Typography variant="h5" sx={{ color: "#1976d2", mb: 2 }}>
+      <Typography variant="h5" sx={{ color: "#1976d2" }}>
         Balance
       </Typography>
-      <Typography color="text.secondary">Cash</Typography>
-      <Typography component="p" variant="h4">
+      <Typography color="text.secondary" sx={{ flex: 1 }}>
+        Cash
+      </Typography>
+      <Typography component="p" variant="h3">
         {user && user.current.balance} €
       </Typography>
-      <Typography color="text.secondary" sx={{ mt: 3 }}>
-        Total
-      </Typography>
-      <Typography component="p" variant="h4">
-        {} €
-      </Typography>
-      <Typography color="text.secondary" sx={{ justifySelf: "flex-end" }}>
+      <Typography color="text.secondary" sx={{ flex: 0 }}>
         on {getDate()}
       </Typography>
     </React.Fragment>

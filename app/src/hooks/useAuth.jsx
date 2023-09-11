@@ -25,29 +25,27 @@ export function AuthProvider(props) {
   }, []);
 
   const fetchUser = async () => {
-    if (!Cookies.get("user")) {
-      await axios
-        .get(
-          `${import.meta.env.VITE_API_URL}/user`,
+    await axios
+      .get(
+        `${import.meta.env.VITE_API_URL}/user`,
 
-          {
-            withCredentials: true,
-          }
-        )
-        .then(async (res) => {
-          if (res.status === 200) {
-            const userData = await res.data;
-            Cookies.set("user", JSON.stringify(userData), {
-              secure: true,
-              sameSite: "strict",
-            });
-            user.current = JSON.parse(Cookies.get("user"));
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    }
+        {
+          withCredentials: true,
+        }
+      )
+      .then(async (res) => {
+        if (res.status === 200) {
+          const userData = await res.data;
+          Cookies.set("user", JSON.stringify(userData), {
+            secure: true,
+            sameSite: "strict",
+          });
+          user.current = JSON.parse(Cookies.get("user"));
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   const login = async (email, password) => {
