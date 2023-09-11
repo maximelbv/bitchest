@@ -19,7 +19,6 @@ import Bitchest from "../../public/static/images/bitchest_icon.svg";
 import { menus } from "../constants/menus";
 import { Link } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
-import EuroIcon from "@mui/icons-material/Euro";
 import { AccountBalanceWallet } from "@mui/icons-material";
 
 const drawerWidth = 240;

@@ -1,5 +1,5 @@
 import { Box, CircularProgress, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   CartesianGrid,
   Label,
@@ -10,7 +10,6 @@ import {
   YAxis,
 } from "recharts";
 import { useTheme } from "@mui/material/styles";
-import { useCurrency } from "../hooks/useCurrency";
 import axios from "axios";
 
 export default function CurrencyBlock({ currency }) {

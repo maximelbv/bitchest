@@ -36,15 +36,17 @@ class DatabaseSeeder extends Seeder
         User::create([
             'email' => 'admin@gmail.com',
             'password' => Hash::make('pass'),
-            'role' => 'admin'
+            'role' => 'admin',
+            'balance' => 10000.00
         ]);
 
         // members
         foreach(range(1, 10) as $index) {
-            User::create([
+            $user = User::create([
                 'email' => $faker->email(),
                 'password' => Hash::make('pass'),
-                'role' => 'member'
+                'role' => 'member',
+                'balance' => $faker->randomFloat(2, 0.01, 10000.00)
             ]);
         }
 
