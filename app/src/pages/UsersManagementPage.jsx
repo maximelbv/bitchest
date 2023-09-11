@@ -70,7 +70,7 @@ export default function UsersManagementPage() {
 
   return (
     <div>
-      <Typography variant="h3">Users management</Typography>;
+      <Typography variant="h3">Users management</Typography>
       {formOpen ? (
         <Button
           variant="outlined"

@@ -25,6 +25,13 @@ Route::prefix('/currency')->name('currency')->controller(\App\Http\Controllers\C
 
 });
 
+Route::prefix('/price')->name('currency_price')->controller(\App\Http\Controllers\CurrencyPriceController::class)->group(function () {
+
+    Route::get('/{id}/all', 'index');
+    Route::get('/{id}/current', 'showCurrent');
+
+});
+
 Route::prefix('/wallet')->name('wallet')->controller(\App\Http\Controllers\WalletController::class)->group(function () {
 
     Route::get('/user/{userId}/all', 'index');

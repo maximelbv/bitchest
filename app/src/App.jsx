@@ -11,6 +11,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import MyInformationsPage from "./pages/MyInformationsPage";
 import { UserProvider } from "./hooks/useUser";
 import { ToastContainer } from "react-toastify";
+import { CurrencyProvider } from "./hooks/useCurrency";
 
 function App() {
   const user = Cookies.get("user")
@@ -22,52 +23,54 @@ function App() {
       <main>
         <AuthProvider>
           <UserProvider>
-            <ToastContainer
-              autoClose={5000}
-              hideProgressBar={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="light"
-            />
+            <CurrencyProvider>
+              <ToastContainer
+                autoClose={5000}
+                hideProgressBar={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+              />
 
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <ProtectedRoute
-                    isAllowed={
-                      !!user &&
-                      (user.role === "admin" || user.role === "member")
-                    }
-                  >
-                    <RootLayout />
-                  </ProtectedRoute>
-                }
-              >
-                <Route path="/home" element={<HomePage />} />
+              <Routes>
                 <Route
-                  path="/my-informations"
-                  element={<MyInformationsPage />}
-                />
-                <Route
-                  path="users-management"
+                  path="/"
                   element={
                     <ProtectedRoute
-                      redirectPath="/home"
-                      isAllowed={!!user && user.role === "admin"}
+                      isAllowed={
+                        !!user &&
+                        (user.role === "admin" || user.role === "member")
+                      }
                     >
-                      <UsersManagementPage />
+                      <RootLayout />
                     </ProtectedRoute>
                   }
-                />
-              </Route>
-              <Route path="*" element={<NotFoundPage />} />
-              <Route path="/login" element={<LoginPage user={user} />} />
-            </Routes>
-            <ToastContainer />
+                >
+                  <Route path="/home" element={<HomePage />} />
+                  <Route
+                    path="/my-informations"
+                    element={<MyInformationsPage />}
+                  />
+                  <Route
+                    path="users-management"
+                    element={
+                      <ProtectedRoute
+                        redirectPath="/home"
+                        isAllowed={!!user && user.role === "admin"}
+                      >
+                        <UsersManagementPage />
+                      </ProtectedRoute>
+                    }
+                  />
+                </Route>
+                <Route path="*" element={<NotFoundPage />} />
+                <Route path="/login" element={<LoginPage user={user} />} />
+              </Routes>
+              <ToastContainer />
+            </CurrencyProvider>
           </UserProvider>
         </AuthProvider>
       </main>

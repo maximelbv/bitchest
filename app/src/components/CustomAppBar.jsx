@@ -70,6 +70,9 @@ const Drawer = styled(MuiDrawer, {
       paddingLeft: "22px",
       minWidth: "40px !important",
     },
+    "& .MuiListItemIcon-root": {
+      minWidth: "48px !important",
+    },
   },
 }));
 
@@ -85,7 +88,9 @@ export default function CustomAppBar() {
       <Bar
         position="absolute"
         open={open}
-        sx={{ "& .MuiToolbar-root": { paddingLeft: "14px !important" } }}
+        sx={{
+          "& .MuiToolbar-root": { paddingLeft: "14px !important" },
+        }}
       >
         <Toolbar
           sx={{
