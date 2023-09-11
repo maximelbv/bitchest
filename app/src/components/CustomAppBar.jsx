@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import {
   AppBar,
+  Chip,
   Divider,
   IconButton,
   List,
@@ -18,6 +19,8 @@ import Bitchest from "../../public/static/images/bitchest_icon.svg";
 import { menus } from "../constants/menus";
 import { Link } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
+import EuroIcon from "@mui/icons-material/Euro";
+import { AccountBalanceWallet } from "@mui/icons-material";
 
 const drawerWidth = 240;
 
@@ -118,6 +121,11 @@ export default function CustomAppBar() {
           >
             {user.current && user.current.email}
           </Typography>
+          <Chip
+            sx={{ color: "white", fontSize: "20px" }}
+            icon={<AccountBalanceWallet sx={{ color: "white !important" }} />}
+            label={user.current && `${user.current.balance} €`}
+          />
           <IconButton
             aria-label="delete"
             onClick={() => {

@@ -1,6 +1,7 @@
 import { Box, CircularProgress, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import {
+  CartesianGrid,
   Label,
   Line,
   LineChart,
@@ -90,6 +91,7 @@ export default function CurrencyBlock({ currency }) {
               stroke={theme.palette.primary.main}
               dot={false}
             />
+            <CartesianGrid stroke="#ccc" />
           </LineChart>
         </ResponsiveContainer>
       ) : (

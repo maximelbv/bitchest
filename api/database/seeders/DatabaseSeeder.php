@@ -65,7 +65,7 @@ class DatabaseSeeder extends Seeder
                 CurrencyPrice::create([
                     'currency_id' => $c->id,
                     'date' => $startDate,
-                    'value' => $faker->randomFloat(2, 0.01, 1000.00),
+                    'value' => $faker->randomFloat(2, 0.01, 10000.00),
                 ]);
                 $startDate = $startDate->addDay();
             }
